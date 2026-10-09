@@ -43,8 +43,8 @@ const db = {
   deleteLead: async (...a) => (await getDb()).deleteLead(...a),
   get kind() { return realDb ? realDb.kind : 'not connected' },
 }
-// Try once at startup, but never hold the site back for more than 3 seconds.
-await Promise.race([getDb().catch(() => {}), new Promise((resolve) => setTimeout(resolve, 3000))])
+// Warm up the connection in the background. No top level await here: Hostinger loads this file with require().
+getDb().catch(() => {})
 const app = express()
 app.set('trust proxy', 1)
 app.disable('x-powered-by')
