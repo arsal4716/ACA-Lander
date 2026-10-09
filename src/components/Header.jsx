@@ -14,7 +14,7 @@ const NAV = [
 export default function Header() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
-  const onQuote = pathname === '/quote'
+  const onQuote = pathname === '/contact-form'
 
   return (
     <>
@@ -40,16 +40,16 @@ export default function Header() {
           <div className="header-actions">
             <div className="header-help">
               <span className="header-help-top">Free, no obligation help</span>
-              <Link to="/quote" className="header-help-link">Get a Quote Now</Link>
+              <Link to="/contact-form" className="header-help-link">Get a Quote Now</Link>
             </div>
             {onQuote ? (
               <Link to="/" className="btn btn-orange btn-sm" id="back-home-btn">
                 <ArrowLeftIcon /> Back to Home
               </Link>
             ) : (
-              <a href={SITE.phoneHref} className="btn btn-orange btn-sm" id="contact-us-btn">
+              <Link to="/contact-form" className="btn btn-orange btn-sm" id="contact-us-btn">
                 <InboxIcon /> Contact Us
-              </a>
+              </Link>
             )}
             {!onQuote && (
               <button type="button" className="menu-toggle" aria-label="Toggle menu" aria-expanded={open} aria-controls="main-nav" onClick={() => setOpen(!open)}>

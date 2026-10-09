@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SITE } from '../data/site'
-import { LockIcon, UserShieldIcon, BanIcon, SendIcon, CheckCircleIcon, PhoneIcon } from '../components/Icons'
+import { LockIcon, SendIcon, CheckCircleIcon } from '../components/Icons'
 
 const FIELDS = [
   { name: 'firstName', label: 'First Name', type: 'text', autoComplete: 'given-name' },
@@ -80,10 +80,8 @@ export default function Quote() {
             <span className="thank-icon"><CheckCircleIcon /></span>
             <h1>Thank You, {values.firstName.trim()}!</h1>
             <p>We received your request. A licensed agent will reach out shortly to help you find the ACA Marketplace plan that fits your budget and needs.</p>
-            <p className="thank-small">Want to talk right now? Call us at <a href={SITE.phoneHref}>{SITE.phone}</a>.</p>
             <div className="thank-actions">
-              <a href={SITE.phoneHref} className="btn btn-orange"><PhoneIcon /> Call Now</a>
-              <Link to="/" className="btn btn-outline-dark">Back to Home</Link>
+              <Link to="/" className="btn btn-orange">Back to Home</Link>
             </div>
           </div>
         </div>
@@ -93,15 +91,15 @@ export default function Quote() {
 
   return (
     <section className="quote-page">
-      <div className="container quote-wrap">
-        <span className="pill">Get Started</span>
-        <h1 className="quote-title">Get Your Free, No Obligation Quote</h1>
-        <p className="quote-sub">Fill out the short form and a licensed agent will reach out to help you find the ACA Marketplace plan that fits your budget and needs.</p>
-        <ul className="quote-badges">
-          <li><LockIcon /> Secure &amp; Confidential</li>
-          <li><UserShieldIcon /> Licensed Agents Only</li>
-          <li><BanIcon /> No Spam, Ever</li>
-        </ul>
+      <div className="container quote-split">
+        <div className="quote-intro">
+          <span className="pill">Get Started</span>
+          <h1 className="quote-title">Get Your Free, No Obligation Quote</h1>
+          <p className="quote-sub">Fill out the short form and a licensed agent will reach out to help you find the ACA Marketplace plan that fits your budget and needs.</p>
+          <ul className="quote-badges">
+            <li><LockIcon /> Secure &amp; Confidential</li>
+          </ul>
+        </div>
 
         <form id="quote-form" name="quoteForm" className="quote-form" onSubmit={onSubmit} noValidate>
           <div className="form-grid">

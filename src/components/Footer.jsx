@@ -31,7 +31,7 @@ export default function Footer() {
           <div>
             <h4>Contact</h4>
             <ul className="contact-list">
-              <li><PhoneIcon /> <a href={SITE.phoneHref}>{SITE.phone}</a></li>
+              <li><PhoneIcon /> <span>{SITE.phone}</span></li>
               <li><MailIcon /> <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
               <li><PinIcon /> <span>{SITE.address}</span></li>
             </ul>

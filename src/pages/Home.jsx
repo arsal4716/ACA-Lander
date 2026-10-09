@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SITE, FAQS } from '../data/site'
+import Reveal from '../components/Reveal'
 import {
   PhoneIcon, InboxIcon, UserShieldIcon, GlobeIcon, LockIcon, DownloadIcon, BoltIcon, HeadsetIcon,
   HandCoinIcon, PillIcon, StethIcon, ToothIcon, ShieldIcon, MapIcon, CheckCircleIcon, ChevronDownIcon,
@@ -24,7 +25,7 @@ const BENEFITS = [
 ]
 
 const STEPS = [
-  ['Call & Check Eligibility', 'Speak with a licensed agent who will ask a few quick questions about your household to see what you qualify for.'],
+  ['Submit & Check Eligibility', 'Speak with a licensed agent who will ask a few quick questions about your household to see what you qualify for.'],
   ['Compare Your Options', 'Review available ACA Marketplace plans side by side, including estimated subsidies and monthly costs.'],
   ['Enroll & Get Covered', "Choose the plan that fits your needs and budget. Your agent handles the paperwork so you don't have to."],
 ]
@@ -65,11 +66,10 @@ export default function Home() {
         <div className="container hero-grid">
           <div className="hero-copy">
             <span className="eyebrow">Affordable Care Act Marketplace</span>
-            <a href={SITE.phoneHref} className="call-bar" id="hero-call-bar"><PhoneIcon /> Call Now: {SITE.phone}</a>
             <h1>Health Coverage, <span className="accent-green">Care You Deserve.</span></h1>
             <p className="lead">Millions of Americans qualify for $0 to low monthly premium health plans through the ACA Marketplace. Answer a few quick questions and a licensed agent will help you find a plan that fits your budget, at no cost to you.</p>
             <div className="hero-cta">
-              <Link to="/quote" className="btn btn-orange btn-lg" id="hero-quote-btn"><InboxIcon /> Get a Quote Now</Link>
+              <Link to="/contact-form" className="btn btn-orange btn-lg" id="hero-quote-btn"><InboxIcon /> Get a Quote Now</Link>
               <span className="hero-note"><CheckCircleIcon /> Free, no obligation</span>
             </div>
             <ul className="hero-badges">
@@ -83,7 +83,7 @@ export default function Home() {
               <span className="float-icon green"><DownloadIcon /></span>
               <span><strong>Subsidies Available</strong><small>Based on household income</small></span>
             </div>
-            <img src="/images/hero.svg" alt="A family relaxing together on a sofa at home" className="hero-img" width="900" height="640" />
+            <img src="/images/hero.webp" alt="A family relaxing together on a sofa at home" className="hero-img" width="1376" height="768" />
             <div className="float-card float-bottom">
               <span className="float-icon orange"><BoltIcon /></span>
               <span><strong>Enroll in Minutes</strong><small>Fast, guided process</small></span>
@@ -110,12 +110,12 @@ export default function Home() {
             <p>ACA Marketplace plans are designed to make quality healthcare accessible and affordable, no matter your situation.</p>
           </div>
           <div className="benefit-grid">
-            {BENEFITS.map(([Icon, title, text]) => (
-              <article className="benefit-card" key={title}>
+            {BENEFITS.map(([Icon, title, text], i) => (
+              <Reveal as="article" className="benefit-card" key={title} delay={(i % 3) * 120}>
                 <span className="benefit-icon"><Icon /></span>
                 <h3>{title}</h3>
                 <p>{text}</p>
-              </article>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -123,28 +123,28 @@ export default function Home() {
 
       <section className="section section-tint" id="how-it-works">
         <div className="container steps-grid">
-          <div className="steps-copy">
+          <Reveal className="steps-copy" from="left">
             <span className="pill">Simple Process</span>
             <h2>Get Covered in 3 Easy Steps</h2>
             <ol className="steps">
               {STEPS.map(([title, text], i) => (
-                <li key={title}>
+                <Reveal as="li" key={title} from="left" delay={250 + i * 220}>
                   <span className="step-num">{i + 1}</span>
                   <div>
                     <h3>{title}</h3>
                     <p>{text}</p>
                   </div>
-                </li>
+                </Reveal>
               ))}
             </ol>
-          </div>
-          <div className="steps-media">
-            <img src="/images/agent.svg" alt="A licensed agent speaking with a customer on a headset" className="agent-img" width="900" height="640" />
+          </Reveal>
+          <Reveal className="steps-media" from="right" delay={150}>
+            <img src="/images/agent.webp" alt="A licensed agent speaking with a customer on a headset" className="agent-img" width="1200" height="896" />
             <div className="float-card float-agent">
               <span className="float-icon plain"><HeadsetIcon /></span>
               <span><strong>Talk to a Real Person</strong><small>Licensed and ready to help</small></span>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -165,8 +165,8 @@ export default function Home() {
           </div>
           <aside className="call-card">
             <h3>Find Out in Under 5 Minutes</h3>
-            <p>Call now and a licensed agent will walk you through your options. No paperwork, no pressure, no cost.</p>
-            <a href={SITE.phoneHref} className="btn btn-orange btn-block" id="qualify-call-btn"><PhoneIcon /> Call {SITE.phone}</a>
+            <p>Fill out the short form and a licensed agent will walk you through your options. No paperwork, no pressure, no cost.</p>
+            <Link to="/contact-form" className="btn btn-orange btn-block" id="qualify-quote-btn"><InboxIcon /> Get My Free Quote</Link>
           </aside>
         </div>
       </section>
@@ -190,10 +190,10 @@ export default function Home() {
           <span className="pill pill-dark">Don't Wait</span>
           <h2>Your Next Step Toward Better Coverage Starts With One Call</h2>
           <p>Licensed agents are standing by to help you understand your options and find a plan that works for your budget, free and without obligation.</p>
-          <a href={SITE.phoneHref} className="big-phone" id="cta-phone">{SITE.phone}</a>
+          <span className="big-phone" id="cta-phone">{SITE.phone}</span>
           <div className="final-btns">
             <a href={SITE.phoneHref} className="btn btn-orange" id="cta-call-btn"><PhoneIcon /> Call Now</a>
-            <Link to="/quote" className="btn btn-outline" id="cta-eligibility-btn">Check Eligibility</Link>
+            <Link to="/contact-form" className="btn btn-outline" id="cta-eligibility-btn">Check Eligibility</Link>
           </div>
         </div>
       </section>
