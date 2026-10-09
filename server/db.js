@@ -84,6 +84,87 @@ async function createMysql() {
   }
 }
 
+
+// ---------- PostgreSQL (Supabase) ----------
+const PG_CREATE_TABLE = `
+CREATE TABLE IF NOT EXISTS leads (
+  id SERIAL PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  first_name VARCHAR(100) NOT NULL,
+  last_name VARCHAR(100) NOT NULL,
+  age SMALLINT NULL,
+  zip CHAR(5) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  email VARCHAR(255) NULL,
+  user_ip VARCHAR(64) NULL,
+  server_ip VARCHAR(64) NULL,
+  leadid_token VARCHAR(255) NULL,
+  trustedform_url VARCHAR(512) NULL,
+  consent_text TEXT NULL,
+  page_url VARCHAR(512) NULL,
+  user_agent VARCHAR(512) NULL,
+  source VARCHAR(100) NULL,
+  payload TEXT NULL
+)`
+
+function buildPgWhere({ q, from, to }) {
+  const where = []
+  const params = []
+  const add = (v) => { params.push(v); return `$${params.length}` }
+  if (q) {
+    const ph = add(`%${q}%`)
+    where.push('(' + SEARCH_COLS.map((c) => `${c} ILIKE ${ph}`).join(' OR ') + ` OR (first_name || ' ' || last_name) ILIKE ${ph})`)
+  }
+  if (from) where.push(`created_at >= ${add(`${from} 00:00:00`)}`)
+  if (to) where.push(`created_at <= ${add(`${to} 23:59:59`)}`)
+  return { sql: where.length ? 'WHERE ' + where.join(' AND ') : '', params }
+}
+
+// "client" only needs query(text, params) -> { rows }. A pg Pool in production, PGlite in tests.
+export async function createPostgresStore(client) {
+  await client.query(PG_CREATE_TABLE)
+  await client.query('CREATE INDEX IF NOT EXISTS idx_leads_created ON leads (created_at)')
+  await client.query('CREATE INDEX IF NOT EXISTS idx_leads_phone ON leads (phone)')
+  // Supabase exposes public tables through its REST API. Turn on row level security with no policies
+  // so only this server (the table owner) can read or write leads.
+  await client.query('ALTER TABLE leads ENABLE ROW LEVEL SECURITY').catch(() => {})
+  return {
+    async insertLead(lead) {
+      const ph = COLUMNS.map((_, i) => `$${i + 1}`).join(', ')
+      const res = await client.query(`INSERT INTO leads (${COLUMNS.join(', ')}) VALUES (${ph}) RETURNING id`, COLUMNS.map((c) => lead[c] ?? null))
+      return res.rows[0].id
+    },
+    async listLeads({ q, from, to, page, pageSize }) {
+      const { sql, params } = buildPgWhere({ q, from, to })
+      const count = await client.query(`SELECT COUNT(*) AS total FROM leads ${sql}`, params)
+      const limit = Number(pageSize)
+      const offset = (Number(page) - 1) * limit
+      const rows = await client.query(`SELECT * FROM leads ${sql} ORDER BY id DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`, [...params, limit, offset])
+      return { total: Number(count.rows[0].total), rows: rows.rows }
+    },
+    async exportLeads(f) {
+      const { sql, params } = buildPgWhere(f)
+      return (await client.query(`SELECT * FROM leads ${sql} ORDER BY id DESC LIMIT 50000`, params)).rows
+    },
+    async deleteLead(id) {
+      const res = await client.query('DELETE FROM leads WHERE id = $1', [id])
+      return res.rowCount
+    },
+    kind: 'postgres',
+  }
+}
+
+async function createPostgres() {
+  const { default: pg } = await import('pg')
+  const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.DATABASE_SSL === 'false' ? false : { rejectUnauthorized: false },
+    max: 5,
+    connectionTimeoutMillis: 10000,
+  })
+  return createPostgresStore(pool)
+}
+
 // In memory store for local development and tests (DB_DRIVER=memory). Data is lost on restart.
 function createMemory() {
   const rows = []
@@ -122,6 +203,8 @@ function createMemory() {
 
 export async function createDb() {
   if (process.env.DB_DRIVER === 'memory') return createMemory()
+  // Supabase / any PostgreSQL: set DATABASE_URL. Otherwise fall back to MySQL (DB_* variables).
+  if (process.env.DATABASE_URL) return createPostgres()
   for (const k of ['DB_USER', 'DB_PASSWORD', 'DB_NAME']) {
     if (!process.env[k]) throw new Error(`Missing environment variable ${k}`)
   }

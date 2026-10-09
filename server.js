@@ -21,7 +21,29 @@ if (fs.existsSync(envFile)) {
   }
 }
 
-const db = await createDb()
+// The site must stay up even if the database is unreachable, so connect lazily and retry on the next request.
+let realDb = null
+let dbErrorCode = null
+async function getDb() {
+  if (realDb) return realDb
+  try {
+    realDb = await createDb()
+    dbErrorCode = null
+    return realDb
+  } catch (err) {
+    dbErrorCode = err.code || err.name || 'ERROR'
+    console.error('Database connection failed:', err.message)
+    throw err
+  }
+}
+const db = {
+  insertLead: async (...a) => (await getDb()).insertLead(...a),
+  listLeads: async (...a) => (await getDb()).listLeads(...a),
+  exportLeads: async (...a) => (await getDb()).exportLeads(...a),
+  deleteLead: async (...a) => (await getDb()).deleteLead(...a),
+  get kind() { return realDb ? realDb.kind : 'not connected' },
+}
+await getDb().catch(() => {})
 const app = express()
 app.set('trust proxy', 1)
 app.disable('x-powered-by')
@@ -112,7 +134,7 @@ app.use('/api', (req, res) => res.status(404).json({ error: 'Not found' }))
 // ---------- Website (built React app) ----------
 app.get('/healthz', (req, res) => {
   const assets = fs.existsSync(path.join(DIST, 'assets')) ? fs.readdirSync(path.join(DIST, 'assets')).filter((f) => f.endsWith('.js')) : []
-  res.json({ ok: true, node: process.version, database: db.kind, dist: DIST, hasIndex: fs.existsSync(path.join(DIST, 'index.html')), jsAssets: assets, cwd: process.cwd() })
+  res.json({ ok: true, node: process.version, database: db.kind, dbError: dbErrorCode, dist: DIST, hasIndex: fs.existsSync(path.join(DIST, 'index.html')), jsAssets: assets, cwd: process.cwd() })
 })
 app.use(express.static(DIST, { index: false, maxAge: '1h' }))
 // Files that do not exist should be a real 404, never index.html (that causes confusing MIME type errors).
