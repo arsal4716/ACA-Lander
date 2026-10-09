@@ -8,8 +8,8 @@ export const SITE = {
   address: '1201 Orange Street, Suite 600, Wilmington, DE 19801',
   legalName: '[Company Legal Name]',
   state: '[State]',
-  // Set VITE_FORM_ENDPOINT in .env to POST submissions to your CRM or lead router.
-  formEndpoint: import.meta.env.VITE_FORM_ENDPOINT || '',
+  // Leads are posted to the Node server in this project. Override with VITE_FORM_ENDPOINT if needed.
+  formEndpoint: import.meta.env.VITE_FORM_ENDPOINT || '/api/leads',
 }
 
 export const FAQS = [

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SITE } from '../data/site'
 import { LockIcon, SendIcon, CheckCircleIcon } from '../components/Icons'
@@ -39,16 +39,15 @@ export default function Quote() {
   const [status, setStatus] = useState('idle') // idle | sending | done | failed
 
   // Fills the hidden user_ip field (same result as the jQuery snippet, without loading jQuery).
+  const ipReady = useRef(null)
   useEffect(() => {
-    let cancelled = false
-    fetch('https://api.ipify.org?format=json')
+    ipReady.current = fetch('https://api.ipify.org?format=json')
       .then((r) => r.json())
       .then((d) => {
         const el = document.getElementById('user_ip')
-        if (!cancelled && el) el.value = d.ip
+        if (el) el.value = d.ip
       })
       .catch(() => {})
-    return () => { cancelled = true }
   }, [])
 
   const onChange = (e) => {
@@ -70,17 +69,21 @@ export default function Quote() {
       return
     }
     setStatus('sending')
-    const pause = new Promise((r) => setTimeout(r, 1400))
+    // If the IP lookup has not finished yet, give it up to 1.5 seconds so the lead carries it.
+    await Promise.race([ipReady.current, new Promise((r) => setTimeout(r, 1500))])
     try {
-      if (SITE.formEndpoint) {
-        const res = await fetch(SITE.formEndpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), source: SITE.domain, submittedAt: new Date().toISOString() }),
-        })
-        if (!res.ok) throw new Error(`Request failed: ${res.status}`)
-      }
-      await pause
+      const res = await fetch(SITE.formEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...Object.fromEntries(new FormData(form)),
+          consent_text: form.querySelector('.consent')?.textContent.replace(/\s+/g, ' ').trim(),
+          page_url: window.location.href,
+          source: SITE.domain,
+          submittedAt: new Date().toISOString(),
+        }),
+      })
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`)
       setStatus('done')
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch {
@@ -118,9 +121,10 @@ export default function Quote() {
         </div>
 
         <form id="quote-form" name="quoteForm" className="quote-form" onSubmit={onSubmit} noValidate>
-          <input type="hidden" id="user_ip" name="user_ip" defaultValue="" />
-          <input type="hidden" id="leadid_token" name="leadid_token" defaultValue="" />
-          <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" defaultValue="" />
+          <input type="hidden" id="user_ip" name="user_ip" />
+          <input type="hidden" id="leadid_token" name="leadid_token" />
+          <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" />
+          <input type="text" name="website" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
           <div className="form-grid">
             {FIELDS.map((f) => (
               <div className={`form-group form-group-${f.name}`} key={f.name}>

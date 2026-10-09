@@ -155,7 +155,7 @@ h2 { font-size: clamp(28px, 3.6vw, 38px); font-weight: 700; }
 /* Footer */
 .site-footer { background: var(--navy); color: #b9cde1; padding: 64px 0 28px; font-size: 14px; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.6fr; gap: 40px; }
-.footer-logo { display: inline-flex; background: #fff; border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; }
+.footer-logo { display: inline-flex; margin-bottom: 18px; }
 .footer-about p { max-width: 340px; }
 .site-footer h4 { color: #fff; font-size: 16px; margin-bottom: 18px; }
 .site-footer li { margin-bottom: 11px; }
@@ -288,3 +288,9 @@ h2 { font-size: clamp(28px, 3.6vw, 38px); font-weight: 700; }
 
 .spinner { width: 1.1em; height: 1.1em; border: 2.5px solid rgba(255, 255, 255, 0.45); border-top-color: #fff; border-radius: 50%; display: inline-block; animation: spin .7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+.logo-img { height: 46px; width: auto; display: block; }
+.footer-logo .logo-img { height: 52px; }
+@media (max-width: 640px) { .logo-img { height: 38px; } }
