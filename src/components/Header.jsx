@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <>
       <div className="topbar">
-        Open Enrollment updates are happening now — <span className="topbar-hl">get your free quote</span> before your window closes.
+        Open Enrollment updates are happening now <span className="topbar-hl">get your free quote</span> before your window closes.
       </div>
       <header className="site-header">
         <div className="container header-inner">
