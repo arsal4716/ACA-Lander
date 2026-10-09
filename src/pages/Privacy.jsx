@@ -21,7 +21,7 @@ export default function Privacy() {
 
           <h2>2. How We Use Your Information</h2>
           <ul>
-            <li>To connect you with a licensed insurance agent for a free, no obligation consultation;</li>
+            <li>To connect you with a licensed insurance agent for a free, no-obligation consultation;</li>
             <li>To respond to inquiries and provide customer support;</li>
             <li>To operate, maintain, and improve the Site;</li>
             <li>To comply with applicable laws, regulations, and industry requirements;</li>
@@ -38,6 +38,7 @@ export default function Privacy() {
 
           <h2>4. Cookies &amp; Tracking Technologies</h2>
           <p>The Site may use cookies, web beacons, and similar technologies to remember preferences, understand how visitors use the Site, and support advertising and analytics. You can control cookies through your browser settings; disabling cookies may affect Site functionality.</p>
+          <p>We also use <strong>TrustedForm</strong>, a certification service provided by ActiveProspect, Inc., to create a timestamped record (&ldquo;certificate&rdquo;) of the session in which you submit a form on this Site. This helps us document and verify your consent to be contacted. TrustedForm may collect information such as your IP address, browser details, and interactions with the page during that session. Learn more at ActiveProspect&rsquo;s TrustedForm disclosure.</p>
 
           <h2>5. Communications Consent (Calls, Texts &amp; Email)</h2>
           <p>If you provide your phone number or submit a request through this Site, you consent to be contacted by us and/or our marketing partners and licensed agents by telephone (including via automatic telephone dialing systems and prerecorded or artificial voice messages), SMS/text message, and email regarding health insurance options, even if your number is on a Do Not Call registry. Consent is not a condition of purchasing any product or service. Message and data rates may apply. You may revoke consent at any time by requesting to be placed on our internal do not call list or by replying &ldquo;STOP&rdquo; to any text message.</p>
@@ -59,8 +60,8 @@ export default function Privacy() {
           <h2>9. Children&rsquo;s Privacy</h2>
           <p>This Site is not directed to individuals under the age of 18, and we do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us so we can delete it.</p>
 
-          <h2>10. Third Party Links</h2>
-          <p>The Site may contain links to third party websites. We are not responsible for the privacy practices or content of those third party sites. We encourage you to review the privacy policies of any third party site you visit.</p>
+          <h2>10. Third-Party Links</h2>
+          <p>The Site may contain links to third-party websites. We are not responsible for the privacy practices or content of those third-party sites. We encourage you to review the privacy policies of any third-party site you visit.</p>
 
           <h2>11. Contact Us</h2>
           <p>If you have questions about this Privacy Policy or wish to exercise your rights, contact us at:</p>

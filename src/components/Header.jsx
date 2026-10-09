@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <>
       <div className="topbar">
-        Open Enrollment updates are happening now <span className="topbar-hl">get your free quote</span> before your window closes.
+        Open Enrollment updates are happening now — <span className="topbar-hl">get your free quote</span> before your window closes.
       </div>
       <header className="site-header">
         <div className="container header-inner">
@@ -39,7 +39,7 @@ export default function Header() {
 
           <div className="header-actions">
             <div className="header-help">
-              <span className="header-help-top">Free, no obligation help</span>
+              <span className="header-help-top">Free, no-obligation help</span>
               <Link to="/contact-form" className="header-help-link">Get a Quote Now</Link>
             </div>
             {onQuote ? (

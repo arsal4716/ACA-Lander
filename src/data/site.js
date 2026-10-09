@@ -15,7 +15,7 @@ export const SITE = {
 export const FAQS = [
   ['What is the ACA Health Insurance Marketplace?', 'The Affordable Care Act (ACA) Marketplace is a system that lets individuals and families shop for and enroll in health insurance plans, with many qualifying for subsidies that lower monthly costs.'],
   ['Does it cost anything to call or get a quote?', 'No. Speaking with a licensed agent and comparing your plan options is completely free, with no obligation to enroll.'],
-  ['Can I get coverage if I have a pre existing condition?', 'Yes. Under the ACA, marketplace insurers cannot deny you coverage or charge you more solely because of a pre existing condition.'],
+  ['Can I get coverage if I have a pre-existing condition?', 'Yes. Under the ACA, marketplace insurers cannot deny you coverage or charge you more solely because of a pre-existing condition.'],
   ['What is Open Enrollment and Special Enrollment?', 'Open Enrollment is the annual window to enroll in or change marketplace plans. Outside that window, certain life events (like losing coverage, marriage, or a new baby) may qualify you for a Special Enrollment Period.'],
   ['How do I know if I qualify for a subsidy?', 'Subsidy eligibility depends on household size and income. A licensed agent can quickly estimate what you may qualify for over the phone.'],
   ['Is my information kept private?', 'Yes. Your information is handled securely and confidentially in accordance with our Privacy Policy.'],
@@ -23,7 +23,7 @@ export const FAQS = [
 
 export const PARTNERS = [
   'All Access Insurance Network of Florida (AAHIN)', 'Alliance and Associates', 'Astoria Company', 'Certik Media (Ally Health)',
-  'Excel Impact LLC Health Insurance', 'Health First Solutions LLC', 'Blue Horizon Benefits', 'PrimeCare Insurance Group',
+  'Excel Impact LLC – Health Insurance', 'Health First Solutions LLC', 'Blue Horizon Benefits', 'PrimeCare Insurance Group',
   'Evergreen Health Advisors', 'Unity Health Partners', 'Freedom Benefits Network', 'Summit Insurance Advisors',
   'Elite Coverage Solutions', 'BrightPath Health Services', 'Secure Health Benefits LLC', 'Apex Health Agency',
   'Liberty Medicare Solutions', 'Pinnacle Benefit Group', 'Prosper Health Advisors', 'NextGen Insurance Partners',

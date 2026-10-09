@@ -40,11 +40,11 @@ export default function Terms() {
           <h2>5. Intellectual Property</h2>
           <p>All content on this Site, including text, graphics, logos, images, and software, is the property of {L} or its licensors and is protected by applicable intellectual property laws. You may not reproduce, distribute, modify, or create derivative works from any content on the Site without our prior written consent.</p>
 
-          <h2>6. Third Party Links</h2>
-          <p>The Site may contain links to third party websites that are not owned or controlled by us. We are not responsible for the content, accuracy, or practices of any third party website. Accessing linked sites is at your own risk.</p>
+          <h2>6. Third-Party Links</h2>
+          <p>The Site may contain links to third-party websites that are not owned or controlled by us. We are not responsible for the content, accuracy, or practices of any third-party website. Accessing linked sites is at your own risk.</p>
 
           <h2>7. Disclaimer of Warranties</h2>
-          <p>THE SITE AND ALL CONTENT ARE PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE,&rdquo; WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON INFRINGEMENT. WE DO NOT WARRANT THAT THE SITE WILL BE UNINTERRUPTED, ERROR FREE, OR SECURE, OR THAT ANY INFORMATION ON THE SITE IS ACCURATE, COMPLETE, OR CURRENT.</p>
+          <p>THE SITE AND ALL CONTENT ARE PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE,&rdquo; WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SITE WILL BE UNINTERRUPTED, ERROR-FREE, OR SECURE, OR THAT ANY INFORMATION ON THE SITE IS ACCURATE, COMPLETE, OR CURRENT.</p>
 
           <h2>8. Limitation of Liability</h2>
           <p>TO THE FULLEST EXTENT PERMITTED BY LAW, {L.toUpperCase()} AND ITS OFFICERS, EMPLOYEES, AGENTS, AND PARTNERS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUE, ARISING OUT OF OR RELATED TO YOUR USE OF THE SITE OR ANY INSURANCE PRODUCT DISCUSSED THROUGH IT, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>

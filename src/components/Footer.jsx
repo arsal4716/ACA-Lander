@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-about">
             <span className="footer-logo"><Logo /></span>
-            <p>We help individuals and families understand their health insurance options under the Affordable Care Act and connect with licensed agents for free, no obligation guidance.</p>
+            <p>We help individuals and families understand their health insurance options under the Affordable Care Act and connect with licensed agents for free, no-obligation guidance.</p>
           </div>
           <div>
             <h4>Quick Links</h4>

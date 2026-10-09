@@ -94,7 +94,7 @@ export default function Quote() {
       <div className="container quote-split">
         <div className="quote-intro">
           <span className="pill">Get Started</span>
-          <h1 className="quote-title">Get Your Free, No Obligation Quote</h1>
+          <h1 className="quote-title">Get Your Free, No-Obligation Quote</h1>
           <p className="quote-sub">Fill out the short form and a licensed agent will reach out to help you find the ACA Marketplace plan that fits your budget and needs.</p>
           <ul className="quote-badges">
             <li><LockIcon /> Secure &amp; Confidential</li>
@@ -130,7 +130,7 @@ export default function Quote() {
           {status === 'failed' && <p className="form-error form-error-banner" role="alert">Something went wrong. Please try again or call {SITE.phone}.</p>}
 
           <p className="consent">
-            By clicking <strong>&ldquo;Get My Free Quote&rdquo;</strong>, you agree to be contacted by {SITE.name} and its licensed agent <Link to="/partners">partners</Link> at the phone number and email you provided, including by autodialer, prerecorded or artificial voice, text message, and email, regarding health insurance options, even if your number is on a Do Not Call list. Consent is not a condition of purchase; message and data rates may apply. You also agree to our <Link to="/privacy-policy">Privacy Policy</Link> and <Link to="/terms">Terms &amp; Conditions</Link>.
+            By clicking <strong>&ldquo;Get My Free Quote&rdquo;</strong>, you agree to be contacted by {SITE.name} and its licensed agent <Link to="/partners">partners</Link> at the phone number and email you provided — including by autodialer, prerecorded or artificial voice, text message, and email — regarding health insurance options, even if your number is on a Do Not Call list. Consent is not a condition of purchase; message and data rates may apply. You also agree to our <Link to="/privacy-policy">Privacy Policy</Link> and <Link to="/terms">Terms &amp; Conditions</Link>.
           </p>
           <p className="consent consent-small">
             This is a solicitation for insurance. {SITE.name} is a private entity and is not affiliated with, endorsed by, or connected to the federal or any state government, the Health Insurance Marketplace, HealthCare.gov, or the Centers for Medicare &amp; Medicaid Services (CMS). A licensed agent may contact you regarding health insurance options. Submitting this request is not a guarantee of coverage or eligibility.
