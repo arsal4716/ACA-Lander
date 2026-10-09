@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SITE } from '../data/site'
 import { LockIcon, SendIcon, CheckCircleIcon } from '../components/Icons'
@@ -38,6 +38,19 @@ export default function Quote() {
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | sending | done | failed
 
+  // Fills the hidden user_ip field (same result as the jQuery snippet, without loading jQuery).
+  useEffect(() => {
+    let cancelled = false
+    fetch('https://api.ipify.org?format=json')
+      .then((r) => r.json())
+      .then((d) => {
+        const el = document.getElementById('user_ip')
+        if (!cancelled && el) el.value = d.ip
+      })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [])
+
   const onChange = (e) => {
     const { name, value } = e.target
     let next = value
@@ -49,6 +62,7 @@ export default function Quote() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
+    const form = e.currentTarget
     const found = validate(values)
     setErrors(found)
     if (Object.keys(found).length) {
@@ -62,7 +76,7 @@ export default function Quote() {
         const res = await fetch(SITE.formEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...values, source: SITE.domain, submittedAt: new Date().toISOString() }),
+          body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), source: SITE.domain, submittedAt: new Date().toISOString() }),
         })
         if (!res.ok) throw new Error(`Request failed: ${res.status}`)
       }
@@ -104,6 +118,9 @@ export default function Quote() {
         </div>
 
         <form id="quote-form" name="quoteForm" className="quote-form" onSubmit={onSubmit} noValidate>
+          <input type="hidden" id="user_ip" name="user_ip" defaultValue="" />
+          <input type="hidden" id="leadid_token" name="leadid_token" defaultValue="" />
+          <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" defaultValue="" />
           <div className="form-grid">
             {FIELDS.map((f) => (
               <div className={`form-group form-group-${f.name}`} key={f.name}>
