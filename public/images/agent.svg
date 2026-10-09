@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" role="img" aria-label="Licensed agent on a call">
+<rect width="900" height="640" fill="#e7f0f4"/>
+<rect x="0" y="0" width="900" height="360" fill="#d6e6ee"/>
+<g fill="#f6fafc" stroke="#9cb7c6" stroke-width="6"><rect x="40" y="60" width="210" height="250"/><rect x="290" y="60" width="210" height="250"/></g>
+<rect x="560" y="120" width="340" height="200" fill="#6d9eaa" opacity=".6"/>
+<rect x="0" y="470" width="900" height="30" fill="#c9a06e"/><rect x="0" y="500" width="900" height="140" fill="#d9b585"/>
+<rect x="110" y="170" width="210" height="150" rx="8" fill="#243b53"/><rect x="120" y="180" width="190" height="130" fill="#e8f2f7"/>
+<text x="215" y="250" font-family="Arial" font-size="20" fill="#9bb4c2" text-anchor="middle">HEALTHCARE</text>
+<rect x="205" y="320" width="20" height="60" fill="#8a9aa5"/><rect x="170" y="376" width="90" height="10" rx="5" fill="#8a9aa5"/>
+<g transform="translate(330 360) rotate(-6)"><rect width="190" height="120" rx="6" fill="#3a4651"/><rect x="10" y="10" width="170" height="100" fill="#cfe3ee"/></g>
+<rect x="480" y="300" width="300" height="300" rx="90" fill="#1d3557"/>
+<circle cx="620" cy="220" r="78" fill="#7a5237"/><circle cx="640" cy="236" r="62" fill="#e3b08c"/>
+<path d="M560 230c20-70 120-80 130-10-30-30-80-30-130 10z" fill="#7a5237"/>
+<path d="M598 266c18 14 42 14 58-2" stroke="#8a3d2f" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path d="M588 190c-20 10-30 30-24 60" stroke="#222" stroke-width="6" fill="none"/><circle cx="560" cy="256" r="8" fill="#222"/>
+<ellipse cx="760" cy="580" rx="70" ry="40" fill="#222c36" opacity=".0"/>
+<rect x="30" y="440" width="60" height="70" rx="6" fill="#c46f3b"/><path d="M60 440c-30-30-30-70 0-100 30 30 30 70 0 100z" fill="#5f9d6e"/>
+</svg>
