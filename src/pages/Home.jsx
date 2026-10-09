@@ -67,7 +67,7 @@ export default function Home() {
           <div className="hero-copy">
             <span className="eyebrow">Affordable Care Act Marketplace</span>
             <h1>Get Covered. Get <span className="accent-teal">Peace of Mind.</span> Get the <span className="accent-green">Care You Deserve.</span></h1>
-            <p className="lead">Millions of Americans qualify for $0–low monthly premium health plans through the ACA Marketplace. Answer a few quick questions and a licensed agent will help you find a plan that fits your budget — at no cost to you.</p>
+            <p className="lead">Millions of Americans qualify for $0 low monthly premium health plans through the ACA Marketplace. Answer a few quick questions and a licensed agent will help you find a plan that fits your budget at no cost to you.</p>
             <div className="hero-cta">
               <Link to="/contact-form" className="btn btn-orange btn-lg" id="hero-quote-btn"><InboxIcon /> Get a Quote Now</Link>
               <span className="hero-note"><CheckCircleIcon /> Free · No obligation</span>
@@ -153,7 +153,7 @@ export default function Home() {
           <div>
             <span className="pill">Who Qualifies</span>
             <h2>You May Qualify More Than You Think</h2>
-            <p className="section-sub">Eligibility for ACA Marketplace plans and subsidies depends on household size, income, and life circumstances — many people are surprised by what they qualify for.</p>
+            <p className="section-sub">Eligibility for ACA Marketplace plans and subsidies depends on household size, income, and life circumstances many people are surprised by what they qualify for.</p>
             <ul className="qualify-list">
               {QUALIFY.map(([title, text]) => (
                 <li key={title}>
@@ -165,7 +165,7 @@ export default function Home() {
           </div>
           <aside className="call-card">
             <h3>Find Out in Under 5 Minutes</h3>
-            <p>Submit a request and a licensed agent will walk you through your options — no paperwork, no pressure, no cost.</p>
+            <p>Submit a request and a licensed agent will walk you through your options no paperwork, no pressure, no cost.</p>
             <Link to="/contact-form" className="btn btn-orange btn-block" id="qualify-quote-btn"><InboxIcon /> Get My Free Quote</Link>
           </aside>
         </div>
