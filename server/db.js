@@ -165,6 +165,62 @@ async function createPostgres() {
   return createPostgresStore(pool)
 }
 
+
+// ---------- MongoDB (Atlas) ----------
+const escapeRegex = (v) => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+export function buildMongoFilter({ q, from, to }) {
+  const filter = {}
+  if (q) {
+    const rx = new RegExp(escapeRegex(q), 'i')
+    filter.$or = [
+      ...SEARCH_COLS.map((c) => ({ [c]: rx })),
+      { $expr: { $regexMatch: { input: { $concat: ['$first_name', ' ', '$last_name'] }, regex: escapeRegex(q), options: 'i' } } },
+    ]
+  }
+  if (from || to) {
+    filter.created_at = {}
+    if (from) filter.created_at.$gte = new Date(`${from}T00:00:00.000Z`)
+    if (to) filter.created_at.$lte = new Date(`${to}T23:59:59.999Z`)
+  }
+  return filter
+}
+
+async function createMongo() {
+  const { MongoClient } = await import('mongodb')
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 10000 })
+  await client.connect()
+  const database = client.db(process.env.MONGODB_DB || undefined)
+  const leads = database.collection('leads')
+  const counters = database.collection('counters')
+  await leads.createIndex({ id: 1 }, { unique: true })
+  await leads.createIndex({ created_at: -1 })
+  await leads.createIndex({ phone: 1 })
+  const noId = { projection: { _id: 0 } }
+  return {
+    async insertLead(lead) {
+      const counter = await counters.findOneAndUpdate({ _id: 'leads' }, { $inc: { seq: 1 } }, { upsert: true, returnDocument: 'after' })
+      const id = counter.seq ?? counter.value?.seq
+      await leads.insertOne({ id, created_at: new Date(), ...lead })
+      return id
+    },
+    async listLeads({ q, from, to, page, pageSize }) {
+      const filter = buildMongoFilter({ q, from, to })
+      const total = await leads.countDocuments(filter)
+      const limit = Number(pageSize)
+      const rows = await leads.find(filter, noId).sort({ id: -1 }).skip((Number(page) - 1) * limit).limit(limit).toArray()
+      return { total, rows }
+    },
+    async exportLeads(f) {
+      return leads.find(buildMongoFilter(f), noId).sort({ id: -1 }).limit(50000).toArray()
+    },
+    async deleteLead(id) {
+      return (await leads.deleteOne({ id: Number(id) })).deletedCount
+    },
+    kind: 'mongodb',
+  }
+}
+
 // In memory store for local development and tests (DB_DRIVER=memory). Data is lost on restart.
 function createMemory() {
   const rows = []
@@ -203,6 +259,8 @@ function createMemory() {
 
 export async function createDb() {
   if (process.env.DB_DRIVER === 'memory') return createMemory()
+  // MongoDB Atlas: set MONGODB_URI.
+  if (process.env.MONGODB_URI) return createMongo()
   // Supabase / any PostgreSQL: set DATABASE_URL. Otherwise fall back to MySQL (DB_* variables).
   if (process.env.DATABASE_URL) return createPostgres()
   for (const k of ['DB_USER', 'DB_PASSWORD', 'DB_NAME']) {

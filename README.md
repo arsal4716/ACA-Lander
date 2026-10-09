@@ -1,6 +1,6 @@
 # Your ACA Plans (youracaplans.com)
 
-Vite + React landing site with a Node.js (Express) server that saves form leads to Supabase (PostgreSQL) or MySQL and serves a password protected leads portal.
+Vite + React landing site with a Node.js (Express) server that saves form leads to Supabase (PostgreSQL), MongoDB Atlas or MySQL and serves a password protected leads portal.
 
 ## Run locally
 
@@ -15,6 +15,7 @@ Vite + React landing site with a Node.js (Express) server that saves form leads 
 2. Build command: `npm run build`  Start command: `npm start`  Entry file: `server.js`  Node 18 or newer.
 3. Create the database. Recommended: a free Supabase project, then copy its **Session pooler** connection string
    (Project Settings > Database > Connection string > URI) into the app variable `DATABASE_URL`.
+   Or MongoDB Atlas: put its `mongodb+srv://` connection string in `MONGODB_URI` (and allow the server in Atlas Network Access); it wins over the others if set.
    Alternative: a MySQL database from hPanel with the `DB_*` variables (see `.env.example`); `DATABASE_URL` wins if both are set.
    The `leads` table is created automatically the first time the app starts. Check `/healthz` shows `"database":"postgres"` (or `mysql`).
 4. Set `ADMIN_USER`, `ADMIN_PASSWORD` and `SESSION_SECRET`, then redeploy.

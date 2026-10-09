@@ -43,7 +43,8 @@ const db = {
   deleteLead: async (...a) => (await getDb()).deleteLead(...a),
   get kind() { return realDb ? realDb.kind : 'not connected' },
 }
-await getDb().catch(() => {})
+// Try once at startup, but never hold the site back for more than 3 seconds.
+await Promise.race([getDb().catch(() => {}), new Promise((resolve) => setTimeout(resolve, 3000))])
 const app = express()
 app.set('trust proxy', 1)
 app.disable('x-powered-by')
