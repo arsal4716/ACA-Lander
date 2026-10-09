@@ -8,7 +8,8 @@ import { checkCredentials, clearSession, isAuthed, issueSession, requireAuth } f
 import { parseLead, toCsv } from './server/leads.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const DIST = path.join(__dirname, 'dist')
+// Hostinger may start the app from a different folder than the one that holds server.js, so look in both.
+const DIST = [path.join(__dirname, 'dist'), path.join(process.cwd(), 'dist')].find((d) => fs.existsSync(path.join(d, 'index.html'))) || path.join(__dirname, 'dist')
 const SOURCE = process.env.SITE_SOURCE || 'website'
 
 // Optional local .env file (Hostinger passes real environment variables, so this is only for development).
@@ -109,8 +110,13 @@ app.get('/admin', (req, res) => {
 app.use('/api', (req, res) => res.status(404).json({ error: 'Not found' }))
 
 // ---------- Website (built React app) ----------
+app.get('/healthz', (req, res) => {
+  const assets = fs.existsSync(path.join(DIST, 'assets')) ? fs.readdirSync(path.join(DIST, 'assets')).filter((f) => f.endsWith('.js')) : []
+  res.json({ ok: true, node: process.version, database: db.kind, dist: DIST, hasIndex: fs.existsSync(path.join(DIST, 'index.html')), jsAssets: assets, cwd: process.cwd() })
+})
 app.use(express.static(DIST, { index: false, maxAge: '1h' }))
-app.use('/assets', express.static(path.join(DIST, 'assets'), { immutable: true, maxAge: '1y' }))
+// Files that do not exist should be a real 404, never index.html (that causes confusing MIME type errors).
+app.use((req, res, next) => (path.extname(req.path) ? res.status(404).type('text/plain').send('Not found') : next()))
 // Any other URL gets index.html so reloading /contact-form works.
 app.get(/.*/, (req, res) => {
   const index = path.join(DIST, 'index.html')
@@ -120,4 +126,4 @@ app.get(/.*/, (req, res) => {
 })
 
 const port = Number(process.env.PORT || 3000)
-app.listen(port, () => console.log(`Server running on port ${port} (database: ${db.kind})`))
+app.listen(port, () => console.log(`Server running on port ${port} (database: ${db.kind}, site files: ${DIST}, index.html: ${fs.existsSync(path.join(DIST, 'index.html'))})`))
