@@ -27,9 +27,9 @@ Because Node serves every page, reloading /contact-form (or any other route) wor
 
 Login, search (name, phone, email, zip, IP, token), date filters, page size and pagination, click a row for all captured fields (LeadiD token, TrustedForm certificate, IPs, consent text), CSV export of the current search, and delete.
 
-## Static hosting alternative
+## Do not add an .htaccess file
 
-If you ever host only the built `dist/` folder as a PHP/HTML website, `public/.htaccess` is copied into `dist/` and rewrites every route to `index.html`. Form posting needs the Node server though, so set `VITE_FORM_ENDPOINT` to the URL of a running instance before building.
+On a Hostinger Node.js Web App, Hostinger manages `public_html/.htaccess` itself to start the app. A rewrite rule there that sends every URL to `index.html` hides `server.js`, the leads API and `/admin`. The Node server already returns `index.html` for unknown pages, so reloads work without it.
 
 ## Notes
 
