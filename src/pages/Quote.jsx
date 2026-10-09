@@ -56,6 +56,7 @@ export default function Quote() {
       return
     }
     setStatus('sending')
+    const pause = new Promise((r) => setTimeout(r, 1400))
     try {
       if (SITE.formEndpoint) {
         const res = await fetch(SITE.formEndpoint, {
@@ -65,6 +66,7 @@ export default function Quote() {
         })
         if (!res.ok) throw new Error(`Request failed: ${res.status}`)
       }
+      await pause
       setStatus('done')
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch {
@@ -125,7 +127,7 @@ export default function Quote() {
           </div>
 
           <button type="submit" id="submit-btn" name="submit" className="btn btn-orange btn-block btn-lg submit-btn" disabled={status === 'sending'}>
-            <SendIcon /> {status === 'sending' ? 'Sending...' : 'Get My Free Quote'}
+            <SendIcon /> {status === 'sending' ? <><span className="spinner" aria-hidden="true" /> Submitting...</> : 'Get My Free Quote'}
           </button>
           {status === 'failed' && <p className="form-error form-error-banner" role="alert">Something went wrong. Please try again or call {SITE.phone}.</p>}
 

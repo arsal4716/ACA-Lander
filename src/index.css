@@ -285,3 +285,6 @@ h2 { font-size: clamp(28px, 3.6vw, 38px); font-weight: 700; }
 .float-card { z-index: 3; }
 .hero-img { transform: rotateY(-5deg) rotateX(2deg) rotateZ(0.5deg); }
 @media (max-width: 960px) { .hero-img { transform: none; } }
+
+.spinner { width: 1.1em; height: 1.1em; border: 2.5px solid rgba(255, 255, 255, 0.45); border-top-color: #fff; border-radius: 50%; display: inline-block; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
