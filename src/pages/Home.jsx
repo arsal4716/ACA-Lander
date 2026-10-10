@@ -74,7 +74,7 @@ export default function Home() {
             </div>
             <ul className="hero-badges">
               <li><UserShieldIcon /> Licensed Agents</li>
-              <li><GlobeIcon /> Se Habla Español</li>
+              <li><GlobeIcon /> English Support</li>
               <li><LockIcon /> Secure &amp; Confidential</li>
             </ul>
           </div>
