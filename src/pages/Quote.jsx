@@ -74,7 +74,10 @@ export default function Quote() {
     try {
       const res = await fetch(SITE.formEndpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        // headers: { 'Content-Type': 'application/json' },
+        headers: {
+  'Content-Type': 'text/plain;charset=utf-8'
+},
         body: JSON.stringify({
           ...Object.fromEntries(new FormData(form)),
           consent_text: form.querySelector('.consent')?.textContent.replace(/\s+/g, ' ').trim(),
