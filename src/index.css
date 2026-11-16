@@ -266,6 +266,7 @@ h2 { font-size: clamp(28px, 3.6vw, 38px); font-weight: 700; }
 .quote-intro { position: sticky; top: 120px; padding-top: 24px; }
 .quote-intro .quote-badges { margin: 28px 0 0; }
 .quote-split .form-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+.quote-split .form-group-email { grid-column: 1 / -1; }
 @media (max-width: 960px) {
   .quote-split { grid-template-columns: 1fr; gap: 28px; }
   .quote-intro { position: static; padding-top: 0; }
