@@ -8,7 +8,6 @@ const FIELDS = [
   { name: 'lastName', label: 'Last Name', type: 'text', autoComplete: 'family-name' },
   { name: 'zip', label: 'ZIP Code', type: 'text', inputMode: 'numeric', autoComplete: 'postal-code', maxLength: 5 },
   { name: 'phone', label: 'Phone Number', type: 'tel', autoComplete: 'tel', maxLength: 14 },
-  { name: 'email', label: 'Email Address', type: 'email', autoComplete: 'email' },
 ]
 
 const EMPTY = Object.fromEntries(FIELDS.map((f) => [f.name, '']))
@@ -26,7 +25,6 @@ function validate(v) {
   if (!v.lastName.trim()) e.lastName = 'Please enter your last name.'
   if (!/^\d{5}$/.test(v.zip)) e.zip = 'Enter a 5 digit ZIP code.'
   if (v.phone.replace(/\D/g, '').length !== 10) e.phone = 'Enter a 10 digit phone number.'
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email)) e.email = 'Enter a valid email address.'
   return e
 }
 
